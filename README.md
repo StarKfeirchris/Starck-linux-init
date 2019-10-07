@@ -6,7 +6,7 @@ Starck's style linux environment initialization
 ### Kernel mainline & longterm version update
 (Longterm kernel just only use CentOS 7)
 
-#### Latest version: [v191007](https://github.com/StarKfeirchris/Starck-linux-init/releases/tag/Starck-linux-init_v191007)
+#### Latest version: [v191007](https://github.com/StarKfeirchris/Starck-linux-init/releases/tag/v191007)
 
 Screen:  
 ![](https://i.imgur.com/z2PdFUR.png)

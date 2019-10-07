@@ -15,10 +15,24 @@ Screen:
 
 1. Download latest file
 ```php
-curl -LO https://github.com/StarKfeirchris/Starck-linux-init/archive/sk_init_v191007.tar.gz
+curl -o sk_init_v191007.sh https://raw.githubusercontent.com/StarKfeirchris/Starck-linux-init/master/sk_init.sh
+```
+
+2. Add execution attribute
+```php
+chmod +x sk_init_v191007.sh
+```
+
+3. Select one script and start.
+```php
+./sk_init_v191007.sh
+```
+
 or
-curl -O https://raw.githubusercontent.com/StarKfeirchris/Starck-linux-init/master/sk_init.sh
-(Jump to step 3)
+
+1. Download latest file
+```php
+curl -LO https://github.com/StarKfeirchris/Starck-linux-init/archive/sk_init_v191007.tar.gz
 ```
 
 2. Unzip .tar.gz file
@@ -26,10 +40,12 @@ curl -O https://raw.githubusercontent.com/StarKfeirchris/Starck-linux-init/maste
 tar zxvf sk_init_v191007.tar.gz  && mv Starck-linux-init-sk_init_v191007 sk_init_v191007
 ```
 
+3 Add execution attribute
+```php
+chmod +x sk_init_v191007/sk_init.sh
+```
+
 3. Select one script and start.
 ```php
 ./sk_init_v191007/sk_init.sh
-or
-./sk_init.sh
-(Only download script use)
 ```

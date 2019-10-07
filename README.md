@@ -40,12 +40,12 @@ curl -LO https://github.com/StarKfeirchris/Starck-linux-init/archive/sk_init_v19
 tar zxvf sk_init_v191007.tar.gz  && mv Starck-linux-init-sk_init_v191007 sk_init_v191007
 ```
 
-3 Add execution attribute
+3. Add execution attribute
 ```php
 chmod +x sk_init_v191007/sk_init.sh
 ```
 
-3. Select one script and start.
+4. Select one script and start.
 ```php
 ./sk_init_v191007/sk_init.sh
 ```

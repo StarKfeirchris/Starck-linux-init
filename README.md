@@ -20,7 +20,6 @@ curl -o sk_init_v191007.sh https://raw.githubusercontent.com/StarKfeirchris/Star
 
 2. Add execution attribute
 ```php
-mv sk_init.sh sk_init_v191007.sh
 chmod +x sk_init_v191007.sh
 ```
 

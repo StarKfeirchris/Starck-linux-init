@@ -6,7 +6,7 @@ Starck's style linux environment initialization
 ### Kernel mainline & longterm version update
 (Longterm kernel just only use CentOS 7)
 
-#### Latest version: [v191007](https://github.com/StarKfeirchris/Starck-linux-init/releases/tag/v191007)
+#### Latest version: [v200529](https://github.com/StarKfeirchris/Starck-linux-init/releases/tag/v200529)
 
 Screen:  
 ![](https://i.imgur.com/z2PdFUR.png)
@@ -15,37 +15,37 @@ Screen:
 
 1. Download latest file
 ```php
-curl -o sk_init_v191007.sh https://raw.githubusercontent.com/StarKfeirchris/Starck-linux-init/master/sk_init.sh
+curl -o sk_init_v200529.sh https://raw.githubusercontent.com/StarKfeirchris/Starck-linux-init/master/sk_init.sh
 ```
 
 2. Add execution attribute
 ```php
-chmod +x sk_init_v191007.sh
+chmod +x sk_init_v200529.sh
 ```
 
 3. Select one script and start.
 ```php
-./sk_init_v191007.sh
+./sk_init_v200529.sh
 ```
 
 or
 
 1. Download latest file
 ```php
-curl -LO https://github.com/StarKfeirchris/Starck-linux-init/archive/sk_init_v191007.tar.gz
+curl -LO https://github.com/StarKfeirchris/Starck-linux-init/archive/sk_init_v200529.tar.gz
 ```
 
 2. Unzip .tar.gz file
 ```php
-tar zxvf sk_init_v191007.tar.gz  && mv Starck-linux-init-sk_init_v191007 sk_init_v191007
+tar zxvf sk_init_v200529.tar.gz  && mv Starck-linux-init-sk_init_v200529 sk_init_v200529
 ```
 
 3. Add execution attribute
 ```php
-chmod +x sk_init_v191007/sk_init.sh
+chmod +x sk_init_v200529/sk_init.sh
 ```
 
 4. Select one script and start.
 ```php
-./sk_init_v191007/sk_init.sh
+./sk_init_v200529/sk_init.sh
 ```

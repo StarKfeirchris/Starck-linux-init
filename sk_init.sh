@@ -65,8 +65,8 @@ case ${feature_choose} in
 			echo -e "${R}You are not run redhat_init, please run first.${E}"
 			exit 0
 		else
-			yum --exclude=kernel update -y
-			yum --exclude=kernel upgrade -y
+			yum update -y
+			yum upgrade -y
 
 			# Update mainline kernel
 			yum -y --enablerepo=elrepo-kernel install kernel-ml

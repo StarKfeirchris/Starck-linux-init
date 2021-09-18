@@ -12,9 +12,9 @@ E="\e[0m"
 
 # Select feature
 read -p "
-$(echo -e "${Y}1${E} > ${G}Update mainline kernel (latest; ${E}${R}Only CentOS${E}${G})${E}")
-$(echo -e "${Y}2${E} > ${G}Update longterm kernel (4.4.x; ${E}${R}Only CentOS${E}${G})${E}")
-$(echo -e "${Y}3${E} > ${G}Run redhat_init (for CentOS 7 & Fedora 28+ and later )${E}")
+$(echo -e "${Y}1${E} > ${G}Update mainline kernel (latest; ${E}${R}Only Rocky Linux${E}${G})${E}")
+$(echo -e "${Y}2${E} > ${G}Update longterm kernel (5.4.x; ${E}${R}Only Rocky Linux${E}${G})${E}")
+$(echo -e "${Y}3${E} > ${G}Run redhat_init (for Rocky Linux 8 & Fedora 34+ and later )${E}")
 $(echo -e "${Y}4${E} > ${G}Run ubuntu_init (for Ubuntu 16.04 and later)${E}")
 $(echo -e "${Y}5${E} > ${G}Verify redhat_init or ubuntu_init result${E}")
 $(echo -e "${Y}Q/q${E} > ${G}Quit${E}")
@@ -37,7 +37,7 @@ else
 	lsb_installed=$(rpm -qa | grep redhat-lsb-core || true)
 	if [[ ${lsb_installed} == '' ]];
 	then
-		yum install -y redhat-lsb --skip-broken
+		dnf install -y redhat-lsb --skip-broken
 	fi
 fi
 
@@ -45,18 +45,18 @@ fi
 os=$(lsb_release -irs | xargs)
 
 # Check elrepo source.
-if [[ ${os} == 'CentOS '* ]];
+if [[ ${os} == 'Rocky '* ]];
 then
 	check_elrepo=$(ls /etc/yum.repos.d/ | grep elrepo || true)
 fi
 
 case ${feature_choose} in
 	1 )
-		if [[ ${os} == 'CentOS '* ]];
+		if [[ ${os} == 'Rocky '* ]];
 		then
 			true
 		else
-			echo -e "${R}This system is not CentOS! please check your system.${E}"
+			echo -e "${R}This system is not Rocky Linux! please check your system.${E}"
 			exit 0
 		fi
 
@@ -65,11 +65,11 @@ case ${feature_choose} in
 			echo -e "${R}You are not run redhat_init, please run first.${E}"
 			exit 0
 		else
-			yum update -y
-			yum upgrade -y
+			dnf update -y
+			dnf upgrade -y
 
 			# Update mainline kernel
-			yum -y --enablerepo=elrepo-kernel install kernel-ml
+			dnf -y --enablerepo=elrepo-kernel install kernel-ml
 			grub2-set-default 0
 		fi
 
@@ -79,16 +79,11 @@ case ${feature_choose} in
 		;;
 
 	2 )
-		if [[ ${os} == 'CentOS '* ]];
+		if [[ ${os} == 'Rocky '* ]];
 		then
-			if [[ ${os} == 'CentOS 8'* ]];
-			then
-				echo -e "${R}CentOS 8 currently does not support the installation of longterm kernel.${E}"
-				exit 0
-			fi
 			true
 		else
-			echo -e "${R}This system is not CentOS! please check your system.${E}"
+			echo -e "${R}This system is not Rocky Linux! please check your system.${E}"
 			exit 0
 		fi
 		
@@ -97,11 +92,11 @@ case ${feature_choose} in
 			echo -e "${R}You are not run redhat_init, please run first.${E}"
 			exit 0
 		else
-			yum --exclude=kernel update -y
-			yum --exclude=kernel upgrade -y
+			dnf --exclude=kernel update -y
+			dnf --exclude=kernel upgrade -y
 
 			# Update mainline kernel
-			yum -y --enablerepo=elrepo-kernel install kernel-lt
+			dnf -y --enablerepo=elrepo-kernel install kernel-lt
 			grub2-set-default 0
 		fi
 
@@ -110,7 +105,7 @@ case ${feature_choose} in
 		;;
 
 	3 )
-		if [[ ${os} == 'CentOS '* || ${os} == 'Fedora '* ]];
+		if [[ ${os} == 'Rocky '* || ${os} == 'Fedora '* ]];
 		then
 			# Disable SELinux.
 			sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/selinux/config
@@ -128,31 +123,9 @@ case ${feature_choose} in
 				# Execute command for different system versions.
 				# Disable firewall. (Default not disable)
 				# Backup & setup prompt config.
-				# Update system & install EPEL repo. (CentOS only)
+				# Update system & install EPEL repo. (Rocky Linux only)
 				# Upgrade kernel to mainline.
-				if [[ ${os} == 'CentOS 7.'* ]];
-				then
-					# If you need close firewall, remove comment.
-					#systemctl disable firewalld
-					sed -i '41 s/  /  #/g' /etc/bashrc
-					sed -i '41a [ "$PS1" = "\\\\\s-\\\\\/v\\\\\\$ " ] && PS1="\\[\\e[0;91m\\][\\[\\e[0m\\]\\[\\e[0;92m\\]\\u\\[\\e[0m\\]\\[\\e[0;94m\\]@\\h\\[\\e[0m\\] \\[\\e[0;93m\\]\\W/\\[\\e[0m\\]\\[\\e[0;91m\\]]\\[\\e[0m\\]\\[\\e[0;93m\\]\\\\\$\\[\\e[0m\\] "' /etc/bashrc
-					sed -i '42 s/^/   /' /etc/bashrc
-					sed -i '42 s/\/v/v/' /etc/bashrc
-
-					# Update system
-					yum install -y epel-release
-					yum --exclude=kernel update -y
-					yum --exclude=kernel upgrade -y
-
-					# Install CentOS 7 elrepo & public key
-					yum install -y https://www.elrepo.org/elrepo-release-7.0-4.el7.elrepo.noarch.rpm || true
-					rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org || true
-
-					# Install mainline kernel
-					yum --enablerepo=elrepo-kernel install -y kernel-ml
-					grub2-set-default 0
-
-				elif [[ ${os} == 'CentOS 8.'* ]];
+				if [[ ${os} == 'Rocky 8.'* ]];
 				then
 					# If you need close firewall, remove comment.
 					#systemctl disable firewalld
@@ -166,7 +139,7 @@ case ${feature_choose} in
 					dnf update -y
 					dnf upgrade -y
 
-					# Install CentOS 8 elrepo & public key
+					# Install Rocky Linux 8 elrepo & public key
 					dnf install -y https://www.elrepo.org/elrepo-release-8.0-2.el8.elrepo.noarch.rpm || true
 					rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org || true
 
@@ -205,17 +178,16 @@ case ${feature_choose} in
 			fi
 
 			# Remove ntpd (If installed)
-			yum remove -y ntp
+			dnf remove -y ntp
 
 			# Install pakage.
-			yum install -y vim bash-completion net-tools wget screen chrony
+			dnf install -y vim bash-completion net-tools wget screen chrony
 
 			# Add chrony configuration.
 			chronyd_conf=$(cat /etc/chrony.conf | grep 'stdtime' | cut -f2 -d'.' | uniq -d || true)
 			if [[ ${chronyd_conf} == '' ]];
 			then
 				sed -i 's/pool /#pool /g' /etc/chrony.conf
-				sed -i 's/^server \([0-3]\).centos/#\0.centos/' /etc/chrony.conf
 				sed -i '2a server ntp2.ntu.edu.tw prefer' /etc/chrony.conf
 				sed -i '2a server clock.stdtime.gov.tw prefer' /etc/chrony.conf
 				sed -i '2a server ntp.ntu.edu.tw prefer' /etc/chrony.conf
@@ -259,7 +231,7 @@ net.ipv4.tcp_congestion_control = bbr
 			fi
 
 		else
-			echo -e "${R}This system is not CentOS or Fedora! please check your system.${E}"
+			echo -e "${R}This system is not Rocky Linux or Fedora! please check your system.${E}"
 			exit 0
 		fi
 		;;
@@ -368,7 +340,7 @@ net.ipv4.tcp_congestion_control = bbr
 
 	5 )
 		echo -e "${B}System infomation:${E}"
-		if [[ ${os} == 'CentOS '* || ${os} == 'Fedora '* ]];
+		if [[ ${os} == 'Rocky '* || ${os} == 'Fedora '* ]];
 		then
 			cat /etc/system-release
 		else
@@ -383,7 +355,7 @@ net.ipv4.tcp_congestion_control = bbr
 		ip a | grep -E "eth0|eth1|eno|enp|ens|em1|em2"
 		echo
 
-		if [[ ${os} == 'CentOS '* || ${os} == 'Fedora '* ]];
+		if [[ ${os} == 'Rocky '* || ${os} == 'Fedora '* ]];
 		then
 			echo -e "${B}Firewall status:${E}"
 			echo -e "${G}(Default active.)${E}"

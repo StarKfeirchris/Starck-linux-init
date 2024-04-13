@@ -65,8 +65,8 @@ case ${feature_choose} in
 			echo -e "${R}You are not run redhat_init, please run first.${E}"
 			exit 0
 		else
-			dnf update -y
-			dnf upgrade -y
+			dnf --exclude=kernel-* update -y
+			dnf --exclude=kernel-* upgrade -y
 
 			# Update mainline kernel
 			dnf -y --enablerepo=elrepo-kernel install kernel-ml
@@ -92,8 +92,8 @@ case ${feature_choose} in
 			echo -e "${R}You are not run redhat_init, please run first.${E}"
 			exit 0
 		else
-			dnf --exclude=kernel update -y
-			dnf --exclude=kernel upgrade -y
+			dnf --exclude=kernel-* update -y
+			dnf --exclude=kernel-* upgrade -y
 
 			# Update mainline kernel
 			dnf -y --enablerepo=elrepo-kernel install kernel-lt

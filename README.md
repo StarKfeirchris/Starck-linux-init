@@ -5,7 +5,7 @@ Starck's style linux environment initialization
 
 ### Kernel mainline & longterm version update
 
-#### Latest version: [v210918](https://github.com/StarKfeirchris/Starck-linux-init/releases/tag/sk_init_v210918)
+#### Latest version: [v221105](https://github.com/StarKfeirchris/Starck-linux-init/releases/tag/sk_init_v221105)
 
 Screen:  
 ![](https://i.imgur.com/HjKvwsq.png)
